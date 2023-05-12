@@ -169,13 +169,13 @@ Se o (`ublox_msgs/msg/navpvt`) estiver disponível e o veículo se mover rápido
 
 de sensores
 
-| topic name                                           | msg type                                         | description           |
+| nome do tópico                                       | tipo de msg                                      | descrição           |
 |------------------------------------------------------|--------------------------------------------------|-----------------------|
 | `/sensing/imu/tamagawa/imu_raw`                      | `sensor_msgs/msg/Imu`                            |                       |
 | `/sensing/camera/traffic_light/image_raw/compressed` | `sensor_msgs/msg/CompressedImage`                |                       |
 | `/sensing/camera/traffic_light/camera_info`          | `sensor_msgs/msg/CameraInfo`                     |                       |
-| `/sensing/gnss/ublox/navpvt`                         | `ublox_msgs/msg/NavPVT`                          | If you use ublox      |
-| `/sensing/gnss/septentrio/poscovgeodetic`            | `septentrio_gnss_driver_msgs/msg/PosCovGeodetic` | If you use Septentrio |
+| `/sensing/gnss/ublox/navpvt`                         | `ublox_msgs/msg/NavPVT`                          | Se você usa ublox      |
+| `/sensing/gnss/septentrio/poscovgeodetic`            | `septentrio_gnss_driver_msgs/msg/PosCovGeodetic` | Se você usa Septentrio |
 | `/vehicle/status/velocity_status`                    | `autoware_auto_vehicle_msgs/msg/VelocityReport`  |                       |
 
 de autoware
@@ -188,16 +188,15 @@ de autoware
 
 <details><summary>clique para abrir</summary><div>
 
-Alguns nós requerem `/tf_static` from `/base_link` para o frame_id of `/sensing/camera/traffic_light/image_raw/compressed` (e.g. `/traffic_light_left_camera/camera_optical_link`).
-You can verify that the tf_static is correct with the following command.
+Alguns nós requerem `/tf_static` from `/base_link` para o frame_id de `/sensing/camera/traffic_light/image_raw/compressed` (Ex: `/traffic_light_left_camera/camera_optical_link`).
+Você pode verificar se o tf_static está correto com o seguinte comando.
 
 ```shell
 ros2 run tf2_ros tf2_echo base_link traffic_light_left_camera/camera_optical_link
 ```
 
-If the wrong `/tf_static` are broadcasted due to using a prototype vehicle, not having accurate calibration data, or some other unavoidable reason, it is useful to give the frame_id in `override_camera_frame_id`.
-If you give it a non-empty string, `/imgproc/undistort_node` will rewrite the frame_id in camera_info.
-For example, you can give a different tf_static as follows.
+Se os erros `/tf_static` forem transmitidos devido ao uso de um protótipo de veículo, falta de dados de calibração precisos ou algum outro motivo inevitável, é útil fornecer o frame_id em `override_camera_frame_id`.
+Se você fornecer uma string não vazia, `/imgproc/undistort_node`irá reescrever o frame_id em camera_info. Por exemplo, você pode fornecer um tf_static diferente da seguinte maneira.
 
 ```shell
 ros2 launch yabloc_launch sample_launch.xml override_camera_frame_id:=fake_camera_optical_link
@@ -210,32 +209,32 @@ ros2 run tf2_ros static_transform_publisher \
 
 </div></details>
 
-### Output topics about pose
+### Tópicos de saída sobre pose
 
 
-| topic name                                            | msg type                             | description                                |
+| nome do tópico                                        | tipo de msg                          | descrição                                  |
 |-------------------------------------------------------|--------------------------------------|--------------------------------------------|
-| `/localicazation/pf/pose`                             | `geometry_msgs/msg/PoseStamped`      | estimated pose                             |
-| `/localicazation/pose_estimator/pose_with_covariance` | `geometry_msgs/msg/PoseStamped`      | estimated pose with covariance             |
+| `/localicazation/pf/pose`                             | `geometry_msgs/msg/PoseStamped`      | pose estimada                             |
+| `/localicazation/pose_estimator/pose_with_covariance` | `geometry_msgs/msg/PoseStamped`      | pose estimada com covariância             |
 
-### Output topics for visualization
+### Tópicos de saída para visualização
 
-This project contains original rviz plugins. [rviz2_overlay_plugins](./rviz2_plugins/rviz2_overlay_plugins/README.md)
+Este projeto contém plugins rviz originais. [rviz2_overlay_plugins](./rviz2_plugins/rviz2_overlay_plugins/README.md)
 
 ![rviz](docs/rviz_description.png)
 
-| index | topic name                                         | description                                                                                                                                                               |
+| index | nome do tópico                                     | descrição                                                                                                                                                               |
 |-------|----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1     | `/localicazation/imgproc/lanelet2_overlay_image`   | Projection of lanelet2 (yellow lines) onto image based on estimated pose. If they match well with the actual road markings, it means that the localization performs well. |
-| 2     | `/localicazation/imgproc/segmented_image`          | result of graph-based segmetation. yellow area is identified as the road surface.                                                                                         |
-| 3     | `/localicazation/pf/cost_map_image`                | cost map generated from lanelet2.                                                                                                                                         |
-| 4     | `/localicazation/imgproc/image_with_line_segments` | detected line segments                                                                                                                                                    |
-| 5     | `/localicazation/map/ground_status`                | ground height and tilt estimatation status                                                                                                                                |
-| 6     | `/localicazation/twist/kalman/status`              | twist estimation status                                                                                                                                                   |
-| 7     | `/localicazation/pf/predicted_particle_marker`     | particle distribution of particle fitler (red means a probable candidate)                                                                                                 |
-| 8     | `/localicazation/pf/gnss/range_marker`             | particle weight distribution by GNSS                                                                                                                                      |
-| 9     | `/localicazation/pf/scored_cloud`                  | 3D projected line segments. the color means the how match they are                                                                                                        |
+| 1     | `/localicazation/imgproc/lanelet2_overlay_image`   | Projeção de lanelet2 (linhas amarelas) na imagem com base na pose estimada. Se eles combinarem bem com as marcações reais da estrada, isso significa que a localização funciona bem. |
+| 2     | `/localicazation/imgproc/segmented_image`          | resultado da segmentação baseada em gráfico. a área amarela é identificada como a superfície da estrada.                                                                                         |
+| 3     | `/localicazation/pf/cost_map_image`                | mapa de custo gerado a partir de lanelet2.                                                                                                                                       |
+| 4     | `/localicazation/imgproc/image_with_line_segments` | segmentos de linha detectados                                                                                                                                                    |
+| 5     | `/localicazation/map/ground_status`                | status de estimativa de altura e inclinação do solo                                                                                                                                |
+| 6     | `/localicazation/twist/kalman/status`              | status de estimativa de torção                                                                                                                                                   |
+| 7     | `/localicazation/pf/predicted_particle_marker`     | distribuição de partículas do filtro de partículas (vermelho significa um provável candidato)                                                                                                 |
+| 8     | `/localicazation/pf/gnss/range_marker`             | distribuição de peso de partícula por GNSS                                                                                                                                      |
+| 9     | `/localicazation/pf/scored_cloud`                  | Segmentos de linha projetados em 3D. a cor significa como eles combinam                                                                                                        |
 
-## License
+## Licença
 
-YabLoc is licensed under Apache License 2.0.
+YabLoc é licenciado sob Apache License 2.0.
