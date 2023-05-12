@@ -1,35 +1,34 @@
 # YabLoc
 
-**YabLoc** is vision-baed localization with vector map. [https://youtu.be/Eaf6r_BNFfk](https://youtu.be/Eaf6r_BNFfk)
+**YabLoc**  é uma localização baseada em visão com mapa vetorial. [https://youtu.be/Eaf6r_BNFfk](https://youtu.be/Eaf6r_BNFfk)
 
-Yabloc has been developed as a new localization stack for [Autoware](https://github.com/autowarefoundation/autoware).
+Yabloc foi desenvolvido como uma nova pilha de localização para [Autoware](https://github.com/autowarefoundation/autoware).
 
 [![thumbnail](docs/yabloc_thumbnail.jpg)](https://youtu.be/Eaf6r_BNFfk)
 
 
-## Installation
+## Instalação
 
-### Prerequisite
+### Pré-requisito
 
 **supporting `Ubuntu 22.04` + `ROS2 humble` now.**
 
-**NOTE:** Currently, this software is assumed to be built in a separate workspace in order not to contaminate the autoware workspace.
-Someday this will be located in the workspace where Autoware blongs. The following submodules will be removed at the time.
+**NOTA:** Atualmente, presume-se que este software seja criado em um espaço de trabalho separado para não contaminar o espaço de trabalho do autoware. Algum dia isso estará localizado no espaço de trabalho onde o Autoware blongs. Os seguintes submódulos serão removidos no momento.
 
 Branches
 
-* [main](https://github.com/tier4/YabLoc/tree/main) is a branch to work with minimal dependence on autoware.
-  * If you want to try the YabLoc demo, please use `main` branch.
-* [autoware(under construction)](https://github.com/tier4/YabLoc/tree/autoware) is a branch made to run as part of Autoware.
+* [main](https://github.com/tier4/YabLoc/tree/main) é um ramo para trabalhar com dependência mínima de autoware.
+  * Se você quiser experimentar a demonstração do YabLoc, use `main` branch.
+* [autoware(under construction)](https://github.com/tier4/YabLoc/tree/autoware) é uma ramificação feita para rodar como parte da Autoware.
 
-Submodules
+Submódulos
 
 * [external/autoware_auto_msgs](https://github.com/tier4/autoware_auto_msgs)
 * [external/autoware_msgs](https://github.com/autowarefoundation/autoware_msgs.git)
 * [external/septentrio_gnss_driver](https://github.com/tier4/septentrio_gnss_driver.git)
 * [external/tier4_autoware_msgs](https://github.com/tier4/tier4_autoware_msgs.git)
 
-### How to build
+### Como build
 
 ```shell
 mkdir yabloc_ws/src -p
@@ -40,7 +39,7 @@ colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 source install/setup.bash
 ```
 
-<details><summary>The author often use this build command</summary><div>
+<details><summary>O autor costuma usar este comando de construção</summary><div>
 
 ```shell
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache --continue-on-error
@@ -54,11 +53,11 @@ colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_E
 
 </div></details>
 
-## Quick Start Demo
+## Demonstração de início rápido
 
 ![how_to_launch_with_rosbag](docs/how_to_launch_quick_start_demo.drawio.svg)
 
-* sample rosbag: [Google Drive link](https://drive.google.com/file/d/1UqULyfidxcA5JidfHWAsSqNy8itampAX/view?usp=share_link)
+* amostra de rosbag: [Google Drive link](https://drive.google.com/file/d/1UqULyfidxcA5JidfHWAsSqNy8itampAX/view?usp=share_link)
 
 ```shell
 # terminal 1
@@ -74,20 +73,20 @@ source install/setup.bash
 ros2 bag play awsim_yabloc_rosbag_sample_0.db3 -s sqlite3
 ```
 
-If YabLoc runs successfully, you will see a screen like the following.
+Se o YabLoc for executado com sucesso, você verá uma tela como a seguinte.
 
 <img src="docs/quick_start_demo_screen.png" width="600">
 
 
-## Demo with Autoware
+## Demonstração com Autoware
 
 **NOTE:** `use_sim_time` is TRUE as default.
 
-### Run with rosbag 
+### Run com rosbag 
 
-<details><summary>click to open </summary><div>
+<details><summary>clique para abrir </summary><div>
 
-**This is a procedure for self-localization, planning/control components of Autoware would not work in this way.**
+**Este é um procedimento para autolocalização, os componentes de planejamento/controle do Autoware não funcionariam dessa maneira.**
 
 ![how_to_launch_with_rosbag](docs/how_to_launch_with_rosbag.drawio.svg)
 
@@ -112,11 +111,11 @@ ros2 bag play your_rosbag --clock 100
 
 </div></details>
 
-### Run in real world
+### Run no mundo real
 
-<details><summary>click to open </summary><div>
+<details><summary>clique para abrir </summary><div>
 
-**This is a procedure for self-localization, planning/control components of Autoware would not work in this way.**
+**Este é um procedimento para autolocalização, os componentes de planejamento/controle do Autoware não funcionariam dessa maneira.**
 
 ![how_to_launch_with_rosbag](docs/how_to_launch_in_real.drawio.svg)
 
@@ -129,46 +128,46 @@ ros2 launch autoware_launch autoware.launch.xml \
 
 </div></details>
 
-### Run with [AWSIM](https://github.com/tier4/AWSIM) <ins>(UNDER CONSTRACTION)</ins>
+### Execute com [AWSIM](https://github.com/tier4/AWSIM) <ins>(EM CONSTRAÇÃO)</ins>
 
-<details><summary>click to open </summary><div>
+<details><summary>clique para abrir </summary><div>
 
-**You have to change autoware.universe branch.**
+**Você tem que mudar o branch autoware.universe **
 
 ```shell
 ```
 
 </div></details>
 
-## How to set initial pose
+## Como definir a pose inicial
 
-### 1. When YabLoc runs `standalone:=true`(default)  (without Autoware's pose_initializer)
+### 1. Quando o YabLoc é executado `standalone:=true`(default)  (without Autoware's pose_initializer)
 
 1. `2D Pose Estimate` in Rviz
 
-You can inidcate x, y and yaw manually in rviz.
+Você pode indicar x, y manualmente no rviz.
 
-2. GNSS Doppler initialization
+2. Inicialização GNSS Doppler
 
-If doppler (`ublox_msgs/msg/navpvt`) is available and the vehicle moves enough fast, YabLoc will estiamte the initial pose **automatically**.
+Se o (`ublox_msgs/msg/navpvt`) estiver disponível e o veículo se mover rápido o suficiente, o YabLoc estimará a pose inicial automaticamente.
 
-### 2. When Yabloc runs `standalone:=false` (through Autoware's pose_initializer)
+### 2. Quando o Yabloc é executado `standalone:=false` (through Autoware's pose_initializer)
 
-<ins>UNDER CONSTRUCTION</ins>
+<ins>EM CONSTRUÇÃO</ins>
 
-## Architecture
+## Arquitetura
 
 ![node_diagram](docs/yabloc_abstruct_architecture.drawio.svg)
 
-<details><summary>click to more detail</summary><div>
+<details><summary>clique para mais detalhes</summary><div>
 
 ![node_diagram](docs/yabloc_architecture.drawio.svg)
 
 </div></details>
 
-### Input topics
+### Tópicos de entrada
 
-from sesnors
+de sensores
 
 | topic name                                           | msg type                                         | description           |
 |------------------------------------------------------|--------------------------------------------------|-----------------------|
@@ -179,17 +178,17 @@ from sesnors
 | `/sensing/gnss/septentrio/poscovgeodetic`            | `septentrio_gnss_driver_msgs/msg/PosCovGeodetic` | If you use Septentrio |
 | `/vehicle/status/velocity_status`                    | `autoware_auto_vehicle_msgs/msg/VelocityReport`  |                       |
 
-from autoware
-| topic name        | msg type                                   | description                               |
+de autoware
+| nome do tópico    | tipo de msg                                | descrição                                 |
 |-------------------|--------------------------------------------|-------------------------------------------|
 | `/tf_static`      | `tf2_msgs/msg/TFMessage`                   | published from `sensor_kit`               |
 | `/map/vector_map` | `autoware_auto_mapping_msgs/msg/HADMapBin` | published from `/map/lanelet2_map_loader` |
 
 #### about tf_static
 
-<details><summary>click to open</summary><div>
+<details><summary>clique para abrir</summary><div>
 
-Some nodes requires `/tf_static` from `/base_link` to the frame_id of `/sensing/camera/traffic_light/image_raw/compressed` (e.g. `/traffic_light_left_camera/camera_optical_link`).
+Alguns nós requerem `/tf_static` from `/base_link` para o frame_id of `/sensing/camera/traffic_light/image_raw/compressed` (e.g. `/traffic_light_left_camera/camera_optical_link`).
 You can verify that the tf_static is correct with the following command.
 
 ```shell
